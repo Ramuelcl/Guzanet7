@@ -5,11 +5,14 @@
     'class' => '',
     'classFix' => 'inline-flex items-center justify-center min-w-20 rounded-md p-2 focus:outline-none focus:ring ',
     'icon' => null,
-    'click' => '',
+    'onclick' => '',
 ])
 {{-- resources\views\components\tw_button.blade.php --}}
 @php
-    const colors = [
+    if (isset($onclick)) {
+        dump($onclick);
+    }
+    $colors = [
         'blue' =>
             'bg-blue-600 dark:bg-blue-400 text-blue-100 dark:text-blue-800 hover:bg-blue-400 dark:hover:bg-blue-200 active:bg-blue-400 dark:active:bg-blue-200 focus:ring-blue-700 dark:focus:ring-blue-500',
         'red' =>
@@ -25,7 +28,7 @@
         'violet' =>
             'bg-violet-600 dark:bg-violet-400 text-violet-100 dark:text-violet-800 hover:bg-violet-400 dark:hover:bg-violet-200 active:bg-violet-400 dark:active:bg-violet-200 focus:ring-violet-700 dark:focus:ring-violet-500',
     ];
-    $classFix = $classFix . colors[$color];
+    $classFix = $classFix . $colors[$color];
 
     if ($icon) {
         $iconPath = storage_path('app/public/images/app/icons/outline/' . $icon . '.svg');
@@ -33,7 +36,7 @@
     }
 @endphp
 <button id="{{ $name }}" name="{{ $name }}" @class([$classFix, $class]) type="{{ $type }}"
-    wire.click="$click">
+    onclick="{{ $onclick }}">
     @if (isset($icon))
         {!! $icon !!}
     @endif

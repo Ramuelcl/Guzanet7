@@ -1,15 +1,11 @@
 @props([
-    'name' => 'button',
-    'type' => 'button',
-    'routeName' => '',
-    'color' => 'blue',
+    'color' => 'gray',
     'class' => '',
     'classFix' => 'inline-flex items-center justify-center min-w-20 rounded-md p-2 focus:outline-none focus:ring ',
     'icon' => null,
 ])
-{{-- resources\views\components\tw_button.blade.php --}}
+{{-- resources\views\components\tw_buttonB.blade.php --}}
 @php
-    // dd($route);
     $colors = [
         'blue' =>
             'bg-blue-600 dark:bg-blue-400 text-blue-100 dark:text-blue-800 hover:bg-blue-400 dark:hover:bg-blue-200 active:bg-blue-400 dark:active:bg-blue-200 focus:ring-blue-700 dark:focus:ring-blue-500',
@@ -34,7 +30,7 @@
     }
 @endphp
 
-<a href="{{ $routeName == '' ? redirect()->back() : route($routeName) }}" @class([$classFix, $class])>
+<a href="{{ url()->previous() }}" @class([$classFix, $class])>
     @if (isset($icon))
         {!! $icon !!}
     @endif {{ $slot }}

@@ -8,7 +8,12 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <x-forms.tw_buttonA class="w-full">{{ __('Create') }}</x-forms.tw_buttonA>
+                @if (session('success'))
+                    <div class="relative px-3 py-3 mb-4 border rounded bg-green-200 border-green-300 text-green-800">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                <x-forms.tw_buttonA class="w-full" routeName="users.create">{{ __('Create') }}</x-forms.tw_buttonA>
                 <table class="table-auto w-full">
                     <thead>
                         <tr>
@@ -26,9 +31,9 @@
                             <tr>
                                 <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
                                     {{ $user->id }}</td>
-                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
+                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-left">
                                     {{ $user->name }}</td>
-                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
+                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-left">
                                     {{ $user->email }}</td>
                                 <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
                                     {{ $user->profile_photo_path }}</td>
@@ -40,7 +45,18 @@
                                     <x-forms.tw_buttonA color="gray"
                                         icon='eye'>{{ __('view') }}</x-forms.tw_buttonA>
                                     <x-forms.tw_buttonA color="green">{{ __('Edit') }}</x-forms.tw_buttonA>
-                                    <x-forms.tw_buttonA color="red">{{ __('delete') }}</x-forms.tw_buttonA>
+                                    <a href="{{ route('users.destroy', $user->id) }}"
+                                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                        onclick="{!! fncSweetAlert(
+                                            'Confirmación de eliminación',
+                                            '¿Estás seguro de que deseas eliminar este usuario?',
+                                            'console.log(\'Usuario eliminado\');',
+                                            'warning',
+                                        ) !!}">
+                                        Eliminar
+                                    </a>
+
+
                                     <x-forms.tw_buttonA color="violet">{{ __('Role') }}</x-forms.tw_buttonA>
                                     <x-forms.tw_buttonA color="yellow">{{ __('Permissions') }}</x-forms.tw_buttonA>
                                 </td>
@@ -52,3 +68,20 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    // function confirmDelete(id) {
+    //     console.log('llegué');
+    //     alertify.confirm("Eliminacion: Realmente desea eliminar este registro", function(e) {
+    //         if (e) {
+    //             let form = document.createElement('form')
+    //             form.method = 'POST'
+    //             form.action = `/users/${id}`
+    //             form.innerHTML = '@csrf @method('DELETE')'
+    //             document.body.appendChild(form)
+    //             form.submit()
+    //         } else() {
+    //             return false;
+    //         };
+    //     })
+    // }
+</script>

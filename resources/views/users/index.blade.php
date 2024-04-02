@@ -13,7 +13,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <x-forms.tw_buttonA class="w-full" routeName="users.create">{{ __('Create') }}</x-forms.tw_buttonA>
+                <x-forms.tw_buttonA class="w-full" routeName="users.create">{{ __('Create New') }}</x-forms.tw_buttonA>
                 <table class="table-auto w-full">
                     <thead>
                         <tr>
@@ -42,21 +42,21 @@
                                 <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
                                     {{ $user->created_at->format('d/m/Y') }}</td>
                                 <td class="border px-4 py-1 text-center">
+                                    {{-- ver un registro --}}
                                     <x-forms.tw_buttonA color="gray"
                                         icon='eye'>{{ __('view') }}</x-forms.tw_buttonA>
+                                    {{-- editar un registro --}}
                                     <x-forms.tw_buttonA color="green">{{ __('Edit') }}</x-forms.tw_buttonA>
-                                    <a href="{{ route('users.destroy', $user->id) }}"
-                                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                        onclick="{!! fncSweetAlert(
-                                            'Confirmación de eliminación',
-                                            '¿Estás seguro de que deseas eliminar este usuario?',
-                                            'console.log(\'Usuario eliminado\');',
-                                            'warning',
-                                        ) !!}">
-                                        Eliminar
-                                    </a>
-
-
+                                    {{-- borrar un registro --}}
+                                    <div class="inline-flex items-center justify-center">
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <x-forms.tw_button type="submit"
+                                                color="red">Eliminar</x-forms.tw_button>
+                                        </form>
+                                    </div>
+                                    {{-- roles --}}
                                     <x-forms.tw_buttonA color="violet">{{ __('Role') }}</x-forms.tw_buttonA>
                                     <x-forms.tw_buttonA color="yellow">{{ __('Permissions') }}</x-forms.tw_buttonA>
                                 </td>

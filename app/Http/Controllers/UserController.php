@@ -88,20 +88,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $id)
+    public function destroy(User $user)
     {
-        // Mostrar la alerta antes de eliminar
-        $titulo = 'Confirmación de eliminación';
-        $mensaje = '¿Estás seguro de que deseas eliminar este elemento?';
-        $accion = "console.log('Elemento eliminado');"; // Puedes personalizar la acción aquí
-        $tipo_alerta = 'warning'; // Puedes cambiar el tipo de alerta si lo deseas
-
-        // Llama a la función para mostrar la alerta
-        $alerta_html = fncSweetAlert($titulo, $mensaje, $accion, $tipo_alerta);
-        if ($alerta_html) {
-            $id->delete();
-            return redirect()->route('users.index')->with('success', 'User deleted');
-        }
-        return redirect()->route('users.index');
+        // Mostrar una ventana emergente con opciones
+        return view('users.confirm-delete', compact('user'));
     }
 }

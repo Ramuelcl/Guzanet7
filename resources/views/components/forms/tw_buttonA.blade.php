@@ -9,7 +9,7 @@
 ])
 {{-- resources\views\components\tw_button.blade.php --}}
 @php
-    // dd($route);
+    // dump($routeName);
     $colors = [
         'blue' =>
             'bg-blue-600 dark:bg-blue-400 text-blue-100 dark:text-blue-800 hover:bg-blue-400 dark:hover:bg-blue-200 active:bg-blue-400 dark:active:bg-blue-200 focus:ring-blue-700 dark:focus:ring-blue-500',

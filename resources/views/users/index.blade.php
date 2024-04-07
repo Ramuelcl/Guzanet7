@@ -17,45 +17,36 @@
                 <table class="table-auto w-full">
                     <thead>
                         <tr>
-                            <th class="px-4 py-1 text-gray-900 dark:text-white text-center">Id</th>
-                            <th class="px-4 py-1 text-gray-900 dark:text-white text-center">Nombre</th>
-                            <th class="px-4 py-1 text-gray-900 dark:text-white text-center">eMail</th>
-                            <th class="px-4 py-1 text-gray-900 dark:text-white text-center">Foto</th>
-                            <th class="px-4 py-1 text-gray-900 dark:text-white text-center">Activo</th>
-                            <th class="px-4 py-1 text-gray-900 dark:text-white text-center">Creado</th>
-                            <th class="px-4 py-1 text-gray-900 dark:text-white text-center">Acciones</th>
+                            @include('includes.titulos')
+                            <th class="px-4 py-1 text-gray-900 dark:text-white text-center">{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($usuario as $field)
                             <tr>
-                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
-                                    {{ $user->id }}</td>
-                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-left">
-                                    {{ $user->name }}</td>
-                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-left">
-                                    {{ $user->email }}</td>
-                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
-                                    {{ $user->profile_photo_path }}</td>
-                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
-                                    {{ $user->is_active ? 'yes' : 'no' }}</td>
-                                <td class="border px-4 py-1 text-gray-900 dark:text-white text-center">
-                                    {{ $user->created_at->format('d/m/Y') }}</td>
+                                @include('includes.fields')
+
                                 <td class="border px-4 py-1 text-center">
+
                                     {{-- ver un registro --}}
                                     <x-forms.tw_buttonA color="gray"
                                         icon='eye'>{{ __('view') }}</x-forms.tw_buttonA>
+
                                     {{-- editar un registro --}}
-                                    <x-forms.tw_buttonA color="green">{{ __('Edit') }}</x-forms.tw_buttonA>
+                                    <a href="{{ route('users.edit', $field->id) }}"
+                                        class="inline-flex items-center justify-center min-w-20 rounded-md p-2 focus:outline-none focus:ring bg-green-600 dark:bg-green-400 text-green-100 dark:text-green-800 hover:bg-green-400 dark:hover:bg-green-200 active:bg-green-400 dark:active:bg-green-200 focus:ring-green-700 dark:focus:ring-green-500">{{ __('Edit') }}
+                                    </a>
+
                                     {{-- borrar un registro --}}
                                     <div class="inline-flex items-center justify-center">
-                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                        <form action="{{ route('users.destroy', $field->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <x-forms.tw_button type="submit"
                                                 color="red">Eliminar</x-forms.tw_button>
                                         </form>
                                     </div>
+
                                     {{-- roles --}}
                                     <x-forms.tw_buttonA color="violet">{{ __('Role') }}</x-forms.tw_buttonA>
                                     <x-forms.tw_buttonA color="yellow">{{ __('Permissions') }}</x-forms.tw_buttonA>
@@ -68,20 +59,3 @@
         </div>
     </div>
 </x-app-layout>
-<script>
-    // function confirmDelete(id) {
-    //     console.log('llegué');
-    //     alertify.confirm("Eliminacion: Realmente desea eliminar este registro", function(e) {
-    //         if (e) {
-    //             let form = document.createElement('form')
-    //             form.method = 'POST'
-    //             form.action = `/users/${id}`
-    //             form.innerHTML = '@csrf @method('DELETE')'
-    //             document.body.appendChild(form)
-    //             form.submit()
-    //         } else() {
-    //             return false;
-    //         };
-    //     })
-    // }
-</script>

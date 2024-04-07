@@ -35,10 +35,10 @@ return new class extends Migration {
         Schema::disableForeignKeyConstraints();
 
         Schema::table($this->table, function (Blueprint $table) {
-            $table->dropColumn('is_active');
-            $table->dropColumn('profile_photo_path');
-            // $table->string('name', 255)->nullable(false)->change();
-            // $table->string('password', 255)->change();
+            $table->dropColumn('is_active')->boolean()->default(true);
+            $table->dropColumn('profile_photo_path')->nullable();
+            $table->string('name', 128)->change();
+            $table->string('password', 128)->change();
         });
 
         Schema::enableForeignKeyConstraints();

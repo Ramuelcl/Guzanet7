@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Edit User') }}
+            {{ __($estado . ' usuario') }}
         </h2>
     </x-slot>
 
@@ -33,23 +33,24 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="mt-4">
-                            <x-input-label for="password" :value="__('New Password')" />
+                        {{-- <div class="mt-4">
+                            <x-input-label for="password" :value="__('Old Password')" />
 
-                            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" />
+                            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password"
+                                :value="old('password', $usuario->password)" />
 
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                        </div>
+                        </div> --}}
 
                         <!-- Confirm Password -->
-                        <div class="mt-4">
-                            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                        {{-- <div class="mt-4">
+                            <x-input-label for="password_confirmation" :value="__('New Password')" />
 
                             <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
                                 name="password_confirmation" />
 
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                        </div>
+                        </div> --}}
 
                         <!-- profile photo -->
                         <div class="mt-4">
@@ -63,7 +64,8 @@
                         <div class="mt-4">
                             <x-input-label for="is_active" :value="__('Active')" />
                             <input type="checkbox" id="is_active" name="is_active"
-                                {{ old('is_active', $usuario->is_active) }} class="block mt-1 rounded" value="1">
+                                :value="{{ old('is_active', $usuario->is_active) }}" class="block mt-1 rounded"
+                                value="1">
 
                             <x-input-error :messages="$errors->get('is_active')" class="mt-2" />
                         </div>

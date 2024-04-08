@@ -53,9 +53,9 @@ return [
         'visible1' => true,
         // ingreso
         'titulo2' => 'Foto',
-        'visible2' => false,
+        'visible2' => true,
         // tipo de campo
-        'tipo' => 'string',
+        'tipo' => 'image',
     ],
 
     'is_active' => [

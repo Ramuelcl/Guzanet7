@@ -7,9 +7,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 //
 use Illuminate\Http\Request;
-use Illuminate\Support\Validator;
+use Illuminate\Support\Facades\Validator;
 use app\models\User;
-// use Config\UserCampos; // Asegúrate de ajustar la ruta correcta
 
 class UserController extends Controller
 {
@@ -42,30 +41,52 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->is_active = $request->is_active == null || $request->is_active == false ? false : true;
+        $request->is_active = $request->is_active == null || $request->is_active == 0 ? false : true;
         $request->profile_photo_path = strtolower($request->profile_photo_path);
-        // dd($request->is_active);
-        $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:80'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'profile_photo_path' => ['string', 'max:255'],
-            'is_active' => ['boolean'],
-        ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'profile_photo_path' => $request->profile_photo_path,
-            'is_active' => $request->is_active,
-        ]);
+        //edicion
+        // $userId = $this->user->id; // Obtén el ID del usuario actual
 
-        event(new Registered($user));
+        $rules = [
+            'name' => 'required|min:3|max:128',
+            'email' => 'required|email|min:10|max:128|unique:users,email',
+            //edicion
+            // 'email' => "required|email|unique:users,email,$userId,id",
+        ];
+        if ($request->profile_photo_path != '') {
+            $rules['profile_photo_path'] = 'image|max:128';
+        }
+        $validator = Validator::make($request->all(), $rules);
 
-        return redirect()->route('users.index')->with('success', 'User created');
+        if ($validator->fails()) {
+            return redirect()->route('users.create')->withInput()->withErrors($validator);
+        }
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->profile_photo_path = $request->profile_photo_path ?? null;
+        $user->is_active = $request->is_active;
+        $user->save();
+
+        //  almacenamos la imagen
+        if ($request->hasFile('profile_photo_path')) {
+            $image = $request->file('profile_photo_path'); // obtener el archivo cargado
+            $ext = $image->getClientOriginalExtension();
+            $imageName = 'perfil_' . time() . '.' . $ext; // unique image name
+
+            // save image name in directory
+            // Guarda la imagen en Storage (carpeta storage/app/public/images/perfiles)
+            $path = $image->storeAs('public/images/perfiles', $imageName);
+            // $image = move(public_path('images/perfiles'), $imageName);
+            // save image name in database
+            $user->profile_photo_path = $path;
+            $user->save();
+        }
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -98,10 +119,10 @@ class UserController extends Controller
         $request->profile_photo_path = strtolower($request->profile_photo_path);
         // dd($request->is_active);
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:80'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'name' => ['required', 'string', 'min:3', 'max:64'],
+            'email' => ['required', 'string', 'email', 'max:128'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'profile_photo_path' => ['string', 'max:255'],
+            'profile_photo_path' => ['string', 'nullable', 'max:128'],
             'is_active' => ['boolean'],
         ]);
 

@@ -8,9 +8,9 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                @if (session('success'))
+                @if (Session::has('success'))
                     <div class="relative px-3 py-3 mb-4 border rounded bg-green-200 border-green-300 text-green-800">
-                        {{ session('success') }}
+                        <div class="md:w-4/5 pr-4 pl-4">{{ Session::get('success') }}</div>
                     </div>
                 @endif
                 <x-forms.tw_buttonA class="w-full" routeName="users.create">{{ __('Create New') }}</x-forms.tw_buttonA>
@@ -24,7 +24,7 @@
                     <tbody>
                         @foreach ($usuario as $field)
                             <tr>
-                                @include('includes.fields')
+                                @include('includes.campos')
 
                                 <td class="border px-4 py-1 text-center">
 

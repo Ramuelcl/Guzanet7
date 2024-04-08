@@ -1,7 +1,17 @@
 <div class="bg-dark py-3">{{ $accion }} Usuario</div>
 <div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-10 d-flex justify-content-end">
+            <a href="{{ route('users.create') }}" class="btn btn-primary">{{ __('Create') }}</a>
+        </div>
+    </div>
     <div class="row d-flex justify-content-center">
-        <div class="col-md-10">
+        @if (Session::has('success'))
+            <div class="alert alert-success">
+                <div class="col-md-10">{{ Session::get('success') }}</div>
+            </div>
+        @endif
+        <div class="col-md-10 mt-4">
             <div class="card borde-0 shadow-lg my-4">
                 <div class="card-header bg-blue-200">
                     <h3 class="text-white">{{ $accion }} </h3>

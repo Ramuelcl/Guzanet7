@@ -29,11 +29,11 @@
                     </div>
                 @break
 
-                {{-- @case('mail')
-                    <div class="text-left">
-                        {{ $valorCampo }}
+                @case('image')
+                    <div class="text-center w-20 h-20">
+                        <img src="{{ asset('storage/' . $valorCampo) }}" alt="Foto">
                     </div>
-                @break --}}
+                @break
 
                 @default
                     <div class="text-left">

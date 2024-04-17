@@ -30,7 +30,7 @@
                 @break
 
                 @case('image')
-                    <div class="text-center w-20 h-20">
+                    <div class="text-center w-10">
                         <img src="{{ asset('storage/' . $valorCampo) }}" alt="Foto">
                     </div>
                 @break

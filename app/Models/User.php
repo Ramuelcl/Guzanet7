@@ -37,4 +37,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function siguiente()
+    {
+        return User::where('id', '>', $this->id)
+            ->orderBy('id', 'asc')
+            ->first();
+    }
+
+    public function previo()
+    {
+        return User::where('id', '<', $this->id)
+            ->orderBy('id', 'desc')
+            ->first();
+    }
 }

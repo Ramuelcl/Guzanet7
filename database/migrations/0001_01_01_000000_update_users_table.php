@@ -15,13 +15,12 @@ return new class extends Migration {
 
         Schema::table($this->table, function (Blueprint $table) {
             // agregar un campo
-            $table->boolean('is_active')->default(true)->after('password');
-            $table->string('profile_photo_path', 128)->nullable()->default(null)->after('password');
+            $table->boolean('is_active')->nullable()->default(true)->after('password');
+            $table->string('profile_photo_path', 128)->nullable()->default('images/avatars/default.png')->after('password');
             // modificar campos
             // * para alterar campos hay que ejecutar antes
             // * composer require doctrine/dbal
             // $table->string('name', 50)->nullable()->change();
-            $table->string('password')->nullable()->default(null)->change();
         });
 
         Schema::enableForeignKeyConstraints();
@@ -35,10 +34,8 @@ return new class extends Migration {
         Schema::disableForeignKeyConstraints();
 
         Schema::table($this->table, function (Blueprint $table) {
-            $table->dropColumn('is_active')->boolean()->default(true);
-            $table->dropColumn('profile_photo_path')->nullable();
-            $table->string('name', 128)->change();
-            $table->string('password', 128)->change();
+            $table->dropColumn('is_active');
+            $table->dropColumn('profile_photo_path');
         });
 
         Schema::enableForeignKeyConstraints();

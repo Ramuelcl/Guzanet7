@@ -2,17 +2,15 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Users List') }}
+
         </h2>
+        @include('layouts.partials.messages')
     </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                @if (Session::has('success'))
-                    <div class="relative px-3 py-3 mb-4 border rounded bg-green-200 border-green-300 text-green-800">
-                        <div class="md:w-4/5 pr-4 pl-4">{{ Session::get('success') }}</div>
-                    </div>
-                @endif
+
                 <x-forms.tw_buttonA class="w-full" routeName="users.create">{{ __('Create New') }}</x-forms.tw_buttonA>
                 <table class="table-auto w-full">
                     <thead>
@@ -22,15 +20,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($usuario as $field)
+                        @forelse ($users as $field)
                             <tr>
                                 @include('includes.campos')
 
                                 <td class="border px-4 py-1 text-center">
 
                                     {{-- ver un registro --}}
-                                    <x-forms.tw_buttonA color="gray"
-                                        icon='eye'>{{ __('view') }}</x-forms.tw_buttonA>
+                                    {{-- <x-forms.tw_buttonA color="gray"
+                                        icon='eye'>{{ __('view') }}</x-forms.tw_buttonA> --}}
+                                    <a href="{{ route('users.show', $field->id) }}"
+                                        class="inline-flex items-center justify-center min-w-20 rounded-md p-2 focus:outline-none focus:ring bg-gray-600 dark:bg-gray-400 text-gray-100 dark:text-gray-800 hover:bg-gray-400 dark:hover:bg-gray-200 active:bg-gray-400 dark:active:bg-gray-200 focus:ring-gray-700 dark:focus:ring-gray-500">{{ __('show') }}
+                                    </a>
 
                                     {{-- editar un registro --}}
                                     <a href="{{ route('users.edit', $field->id) }}"
@@ -52,7 +53,9 @@
                                     <x-forms.tw_buttonA color="yellow">{{ __('Permissions') }}</x-forms.tw_buttonA>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            No hay registros
+                        @endforelse
                     </tbody>
                 </table>
             </div>

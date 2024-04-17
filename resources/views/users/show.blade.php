@@ -9,27 +9,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <!-- Session Status -->
-                    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-                    <form method="POST" action="{{ route('users.update', $usuario->id) }}">
-                        @csrf
-                        @method('PUT')
-
+                    <form>
                         <!-- Name -->
                         <div>
                             <x-input-label for="name" :value="__('Name')" />
-                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                                :value="old('name', $usuario->name)" required autofocus autocomplete="name" />
-                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                            <x-text-input id="name" class="block mt-1 w-full" name="name" :value="$usuario->name"
+                                readonly />
                         </div>
 
                         <!-- Email Address -->
                         <div class="mt-4">
                             <x-input-label for="email" :value="__('Email')" />
-                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
-                                :value="old('email', $usuario->email)" required autocomplete="username" />
-                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            <x-text-input id="email" class="block mt-1 w-full" name="email" :value="$usuario->email"
+                                readonly />
                         </div>
 
                         <!-- Foto de perfil -->
@@ -67,8 +59,20 @@
 
                         <!-- botones -->
                         <div class="mt-4 justify-between">
-                            <x-forms.tw_button color="green" type="submit"
-                                routeName="users.store">{{ __('Update') }}</x-forms.tw_button>
+                            <!-- Botones de navegación -->
+                            {{-- @if ($usuario->id > $primero)
+                                <a href="{{ route('users.show', $usuario->id - 1) }}"
+                                    class="inline-flex items-center justify-center min-w-20 rounded-md p-2 focus:outline-none focus:ring bg-yellow-600 dark:bg-yellow-400 text-yellow-100 dark:text-yellow-800 hover:bg-yellow-400 dark:hover:bg-yellow-200 active:bg-yellow-400 dark:active:bg-yellow-200 focus:ring-yellow-700 dark:focus:ring-yellow-500">Anterior</a>
+                            @else
+                                <x-forms.tw_button color="yellow" disabled>Anterior</x-forms.tw_button>
+                            @endif
+                            @if ($usuario->id < $ultimo)
+                                <a href="{{ route('users.show', $usuario->id + 1) }}"
+                                    class="inline-flex items-center justify-center min-w-20 rounded-md p-2 focus:outline-none focus:ring bg-yellow-600 dark:bg-yellow-400 text-yellow-100 dark:text-yellow-800 hover:bg-yellow-400 dark:hover:bg-yellow-200 active:bg-yellow-400 dark:active:bg-yellow-200 focus:ring-yellow-700 dark:focus:ring-yellow-500 ">Siguiente</a>
+                            @else
+                                <x-forms.tw_button color="yellow" disabled>Siguiente</x-forms.tw_button>
+                            @endif --}}
+
                             <x-forms.tw_buttonA color="gray" routeName="users.index">{{ __('Cancel') }}
                             </x-forms.tw_buttonA>
                         </div>

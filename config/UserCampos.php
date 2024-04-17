@@ -47,27 +47,27 @@ return [
         'tipo' => 'password',
     ],
 
-    'profile_photo_path' => [
-        // lista
-        'titulo1' => 'Foto',
-        'visible1' => true,
-        // ingreso
-        'titulo2' => 'Foto',
-        'visible2' => true,
-        // tipo de campo
-        'tipo' => 'image',
-    ],
+    // 'profile_photo_path' => [
+    //     // lista
+    //     'titulo1' => 'Foto',
+    //     'visible1' => true,
+    //     // ingreso
+    //     'titulo2' => 'Foto',
+    //     'visible2' => true,
+    //     // tipo de campo
+    //     'tipo' => 'image',
+    // ],
 
-    'is_active' => [
-        // lista
-        'titulo1' => 'Activo',
-        'visible1' => true,
-        // ingreso
-        'titulo2' => 'Activo',
-        'visible2' => true,
-        // tipo de campo
-        'tipo' => 'checkit',
-    ],
+    // 'is_active' => [
+    //     // lista
+    //     'titulo1' => 'Activo',
+    //     'visible1' => true,
+    //     // ingreso
+    //     'titulo2' => 'Activo',
+    //     'visible2' => true,
+    //     // tipo de campo
+    //     'tipo' => 'checkit',
+    // ],
 
     'created_at' => [
         // lista
